@@ -1,0 +1,4 @@
+users: [
+       {username: 'matti', password: 'matti1'},
+       {username: 'keijo', password: 'keijo1'},
+     ]
