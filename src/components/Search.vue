@@ -9,6 +9,7 @@
     <div class="text">
       <h1>name: {{item.name}}</h1>
       <h1>para: {{item.leadParagraph}}</h1>
+      <h1>para: {{item.productImages.sys.id}}</h1>
       <!-- <h1>{{result.leadParagraph}}</h1>
       <h3>{{name}}</h3>
       <p>{{leadParagraph}}</p> -->
@@ -47,7 +48,8 @@ export default {
               return {
                         'name': a.fields.name,
                         'leadParagraph': a.fields.leadParagraph,
-                        'imageUrl': getImage
+                        'imageUrl': getImage,
+                        'imageId': a.fields.productImages.sys.id
                          };
 
               // console.log(a.fields);
