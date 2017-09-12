@@ -6,15 +6,14 @@
         <vue-markdown>{{result.fields.name}}</vue-markdown>
         <vue-markdown>{{result.fields.leadParagraph}}</vue-markdown>
         <vue-markdown>{{result.fields.bodyText}}</vue-markdown>
-
-
 </div>
 </template>
 
 
 <script>
 import VueMarkdown from 'vue-markdown' 
-
+const access_token = '36d87b4c5f2c055c76428045c3c755b8281c1da923ff9293f6cb387d5eb925a7'
+const spaces = 'crri95q24zbr'
 export default {
   name: 'julkaisu',
   data () {
@@ -29,7 +28,7 @@ export default {
   },
   methods: {
     fetchJulkaisu(){
-      this.$http.get('https://cdn.contentful.com/spaces/crri95q24zbr/entries/'+this.id+'/?access_token=36d87b4c5f2c055c76428045c3c755b8281c1da923ff9293f6cb387d5eb925a7')
+      this.$http.get('https://cdn.contentful.com/spaces/' + spaces + '/entries/'+this.id+'/?access_token=' + access_token + '')
         .then(response => {
             (this.result = JSON.parse(response.body))
             console.log(response);

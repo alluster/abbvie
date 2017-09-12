@@ -13,21 +13,28 @@
 </template>
 
 <script>
+const access_token = '36d87b4c5f2c055c76428045c3c755b8281c1da923ff9293f6cb387d5eb925a7'
+const spaces = 'crri95q24zbr'
 import Etusivu from './components/Etusivu'
 import Kayttajatili from './components/Kayttajatili'
 import Haku from './components/Haku'
 import Login from './components/Login'
 import Julkaisu from './components/Julkaisu'
 
+
+
+
 export default {
   name: 'app',
+
   components: {
        'Kayttajatili': Kayttajatili,
        'Etusivu': Etusivu,
        'Haku': Haku,
        'Login': Login,
        'Julkaisu': Julkaisu
-  }
+  },
+
 }
 </script >
 

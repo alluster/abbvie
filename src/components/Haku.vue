@@ -23,18 +23,22 @@
 
 
 <script>
+const access_token = '36d87b4c5f2c055c76428045c3c755b8281c1da923ff9293f6cb387d5eb925a7'
+const spaces = 'crri95q24zbr'
 export default {
   name: 'search-content',
+
   data () {
     return {
       search: '',
       result: [],
-      buttonInfo: 'See more'
+      buttonInfo: 'See more',
+
     }
   },
   methods: {
     fetchItems(){
-      this.$http.get('https://cdn.contentful.com/spaces/crri95q24zbr/entries?access_token=36d87b4c5f2c055c76428045c3c755b8281c1da923ff9293f6cb387d5eb925a7')
+      this.$http.get('https://cdn.contentful.com/spaces/' + spaces + '/entries?access_token=' + access_token + '')
         .then(response => {
             this.result = JSON.parse(response.body).items.map(a => {
               var imageId = a.fields.productImages ? a.fields.productImages : [{'sys': {'id': ''}}];
@@ -46,14 +50,14 @@ export default {
                         'imageUrl': '',
                          };
               if (imageId[0].sys.id) {
-                  this.$http.get('https://cdn.contentful.com/spaces/crri95q24zbr/assets/' + imageId[0].sys.id + '?access_token=36d87b4c5f2c055c76428045c3c755b8281c1da923ff9293f6cb387d5eb925a7')
+                  this.$http.get('https://cdn.contentful.com/spaces/' + spaces + '/assets/' + imageId[0].sys.id + '?access_token=' + access_token +'')
                     .then(response => {
                       dataObject.imageUrl = JSON.parse(response.body).fields.file.url;
                       console.log(dataObject);
 
                 })
               }
-              console.log('👍');
+              console.log('🚀');
                 return dataObject;
             });
         });
@@ -81,9 +85,7 @@ export default {
 
 
 </script>
-<!-- https://cdn.contentful.com/spaces/crri95q24zbr/content_types/person?access_token=36d87b4c5f2c055c76428045c3c755b8281c1da923ff9293f6cb387d5eb925a7 -->
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
 /*Fonts */
