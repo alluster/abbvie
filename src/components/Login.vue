@@ -1,6 +1,7 @@
 <template>
     <div class="login">
-  <h1>{{msg}}</h1>
+    <h1 class="header">{{header}}</h1>
+    <p class="lead" >{{lead}}</p>
     <form v-on:submit=''>
       <input type="text" v-model='username' placeholder="Insert username" />
       <br>
@@ -23,7 +24,8 @@ export default {
   name: 'login',
   data () {
     return {
-      msg: 'Welcome to Your Abbvie Platform'
+      header: 'Tervetuloa Abbvie Duodopa® palveluun',
+      lead: 'Ole hyvä ja kirjaudu jatkaaksesi palveluun. Mikäli sinulla ei vielä ole tunnuksia voit rekisteröityä. mikäli olet unohtanut salasanasi tai käyttäjätunnuksesi, paina tästä'
     }
   },
   method: {
@@ -40,7 +42,14 @@ export default {
 h1, h2 {
   font-weight: normal;
 }
-
+.header {
+  margin: 20px
+}
+.lead {
+  max-width: 70%;
+  text-align: center;
+  margin-left: 15%
+}
 ul {
   list-style-type: none;
   padding: 0;
