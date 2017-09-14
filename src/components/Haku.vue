@@ -57,7 +57,7 @@ export default {
 
                 })
               }
-              console.log('🚀');
+              console.log('moi');
                 return dataObject;
             });
         });
