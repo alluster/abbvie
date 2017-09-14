@@ -9,7 +9,6 @@ import Login from './components/Login'
 import Julkaisu from './components/Julkaisu'
 
 
-var contentful = require('contentful')
 
 
 Vue.use(vueResource)
@@ -28,5 +27,6 @@ new Vue({
 	router,
 	el: '#app',
 	template: '<App/>',
-	components: { App },
+	components: { App }
+
 })
