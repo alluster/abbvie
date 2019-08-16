@@ -1,6 +1,10 @@
 <template>
   <div class="haku">
-    <div class="tausta">
+   <div class="container">
+     <div style="min-width: 60rem; margin-right:auto;margin-left: auto; margin-top: 2rem">
+     
+          </div>
+    <!--<div class="tausta">
       <md-layout style="color: white"  >
         <md-layout style="overflow: hidden;"  >
           <div style="min-width: 60rem; margin-right:auto;margin-left: auto; margin-top: 2rem">
@@ -9,49 +13,55 @@
           </div>
         </md-layout>
       </md-layout>
-    </div>
-    <div class="container">
-    
-      <md-input-container>
-        <label>
-          <md-icon>search</md-icon>&nbsp;Anna hakusana</label>
-        <md-textarea style="margin-top: 2%" v-model='search'></md-textarea>      
-        <div class="tooltip"><md-icon>help</md-icon>
-        <span class="tooltiptext">Antamasi hakusana hakee automaattisesti sisältöjä. Kun olet kirjoittanut siirry suoraan hakutuloksiin sivun alareunaan</span>
-       </div>
-      </md-input-container>
-        <md-button style="background-color:  #051B4A; color: white;" class="md-raised md-primary">PDF sisällöt&nbsp;&nbsp;<md-icon style="color: white">cancel</md-icon></md-button>
-        <md-button style="background-color:  #051B4A; color: white;" class="md-raised md-primary">Sisällöt lääkärille&nbsp;&nbsp;<md-icon style="color: white">cancel</md-icon></md-button>
-        <md-button style="background-color:  #051B4A; color: white;" class="md-raised md-primary">Videot&nbsp;&nbsp;<md-icon style="color: white">cancel</md-icon></md-button>
-        <md-button style="background-color:  #051B4A; color: white;" class="md-raised md-primary">Sisällöt Hoitajalle&nbsp;&nbsp;<md-icon style="color: white">cancel</md-icon></md-button>
-        <div class="tooltip"><md-icon>help</md-icon>
-        <span class="tooltiptext">Voit sammuttaa haluamasi hakusuodattimet klikkaamalla</span>
+    </div>-->
+<!--<select  v-model="search">
+  <option v-for="filter in filters" >  {{ filter.name }}</option>
+</select>
+<h2>{{ filter }}  </h2>-->
+<!--<md-icon style="color: lightgray">cancel</md-icon>-->
+
+
+      <div >
+        <input class="search-input" type="search" @input="changeSearch"  placeholder="Anna hakusana" />
       </div>
+
+            <div class="btn-group" style="display: inline-block;" v-for="filter in filters" >
+        <button class="button" v-on:click="active(filter); search=(search + filter.name)" :class="{active: filter.active }" style="font-size: 12px; color: white;">{{ filter.name }}</button>
+       </div>
+       <div class="tooltip"><md-icon>help</md-icon>
+          <span class="tooltiptext">Aktivoi filteri klikkaamalla sitä. Poista käytöstä painamalla </span>
+        </div>
+
+
+          <div style="flex: 1; flex-wrap: nowrap; align-self: flex-end; margin-top: 2rem;  ">
+            <p style="text-align: right">
+            <md-button v-on:click="seenList=false"  class="filter-button-left">
+              <md-icon >view_week</md-icon>
+            </md-button>
+            <md-button v-on:click="seenList=true" class="filter-button-right">
+              <md-icon >view_stream</md-icon>
+            </md-button>
+          </p>
+         </div>
+
+
+     <!--<h3> <span>Näytä myös videot hakutulosksissa:  </span> <md-switch class="md-primary"></md-switch></h3>-->
+
+
 
         <!-- Hieno snackbar -->
 
-      <!-- <form novalidate @submit.stop.prevent="open">
-        <md-button type="submit" class="md-primary md-raised">Open Snackbar</md-button>
-        <md-snackbar :md-position="vertical + ' ' + horizontal" ref="snackbar" :md-duration="duration">
-          <span>Ei toimi</span>
-           <md-button class="md-accent" md-theme="light-blue" @click="$refs.snackbar.close()">Retry</md-button>
-        </md-snackbar>
-      </form> -->
+    
 
       <!-- Hieno snackbar end -->
     
-      <p style="text-align: right">
-        <md-button v-on:click="seenList=false" v-bind:class="{ clicked: seenCards }" class="filter-button-left">
-          <md-icon >view_week</md-icon>
-        </md-button>
-        <md-button v-on:click="seenList=true" v-bind:class="{ clicked: seenCList }" class="filter-button-right">
-          <md-icon >view_stream</md-icon>
-        </md-button>
-      </p>
 
-      <p>Hakutulokset:</p>
+
+       <!--<span style="float: left;line-height: 60px;"> <p>Hakutulokset:</p> </span>-->
+       
+    
       <md-table v-if="seenList" >
-        <md-table-body v-for="item in filteredItems">
+        <md-table-body v-for="item in filteredSearch">
           <md-table-row>
             <md-table-cell style="color: #051B4A;"> <router-link :to="'/julkaisu/'+item.id"><h3>{{item.name}}</h3></router-link></md-table-cell>
             <md-table-cell style="width: 20%">
@@ -60,92 +70,131 @@
           </md-table-row>
         </md-table-body>
       </md-table>
-
-      <md-layout v-else="seenCards" md-gutter>
-        <md-layout md-flex="33" v-for="item in filteredItems">
-          <div class="card radius shadowDepth1">
+    <div class="cards">
+        <div class="card radius shadowDepth1" v-for="item in filteredSearch">
             <router-link :to="'/julkaisu/'+item.id">
               <div class="card__image border-tlr-radius">
                 <img v-if="item.imageUrl" v-bind:src="item.imageUrl" alt="Image">
                 <img v-else src="../assets/logo.png" alt="Product image">
               </div>
             </router-link>
+
             <div class="card__content card__padding">
-              <div style="font-size: 15px; margin-bottom: 20px" class="card__meta">
-                <a href="#">Duodopa® | Hoitaja</a> <br>               
-                <a href="#">Julkaisupäivä: {{item.createdAt}}</a>
-              </div>
               <article class="card__article">
                 <router-link :to="'/julkaisu/'+item.id">
                   <a><h3 style="color: #051B4A">{{item.name}}</h3></a>
                 </router-link>
+                    <div style="font-size: 15px; margin-bottom: 5px" >
+                <a href="#" style="font-weight: 700"> {{item.createdAt | moment("D.M.YYYY") }}</a>             
+              </div>
                 <p>{{item.leadParagraph}}</p>
+              <div class="md-chip" v-for="type in item.type">
+                  <span >{{ type }} </span>
+              </div>
               </article>
             </div>
             <div class="card__action">
             </div>
           </div>
-
-
-
-
-
-          <!-- <md-card class="card">
-            <router-link :to="'/julkaisu/'+item.id">
-              <md-card-media md-flex="33">
-                <img v-if="item.imageUrl" v-bind:src="item.imageUrl" alt="Image">
-                <img v-else src="../assets/logo.png" alt="Product image">
-              </md-card-media>
-            </router-link>
-            <md-card-header>
-              <div>
-                <router-link :to="'/julkaisu/'+item.id">
-                  <h3>{{item.name}}</h3></router-link>
-              </div>
-            </md-card-header>
-            <md-card-content style="margin-bottom: 30px">{{item.leadParagraph}}</md-card-content>
-            <md-card-actions>
-              <router-link :to="'/julkaisu/'+item.id" style="flex: 1; position: absolute; bottom: 5px; text-transform: none; font-weight:  300" class="md-button">Lue lisää</router-link>
-            </md-card-actions>
-          </md-card> -->
-        </md-layout>
-      </md-layout>
+    </div>
+          <form novalidate @submit.stop.prevent="open">
+        <md-button type="submit" class="md-primary md-raised">Anna lisäneuvoja käytön tueksi</md-button>
+        <md-snackbar :md-position="vertical + ' ' + horizontal" ref="snackbar" :md-duration="duration">
+          <span>Mikäli et näe hakutuloksia, kokeile päivittää ikkuna.</span>
+           <md-button class="md-accent" md-theme="light-blue" @click="$refs.snackbar.close()">Sulje</md-button>
+        </md-snackbar>
+      </form> 
     </div>
   </div>
+ 
+</div>
+
 </template>
 <script>
 const access_token = '01a2c19d945b439da132249d1b2c265ea71e71a39be1ffa0cce5328a7d10d388'
 const spaces = 'gux1c3twzpd4'
 
-
-
+import Video from './Video'
 
 
 export default {
   name: 'haku',
-
   data() {
     return {
+      testSearch: '',
+      filter: '',
       search: '',
+      moi: '',
       result: [],
-      filters: [],
+      filters: [ 
+          {
+          id: 6,
+          name: 'Video',
+          active: false
+          
+        },
+        {
+          id: 1,
+          name: 'Hoidon toteutus',
+          active: false
+        },
+        {
+          id: 2,
+          name: 'Hoidon suunnittelu',
+          active: false
+          
+        },
+        {
+          id: 3,
+          name: 'Hoidon seuranta',
+          active: false 
+          
+        },
+        {
+          id: 4,
+          name: 'Potilasmateriaali',
+          active: false
+          
+        },
+        {
+          id: 5,
+          name: 'Tutkimukset',
+          active: false 
+        }
+      ],
       seenList: false,
       seenCards: true,
-       vertical: 'bottom',
-    horizontal: 'center',
-    duration: 4000
-      }
+      vertical: 'bottom',
+      horizontal: 'center',
+      duration: 6000,
+        
+    }
+
+  },
+  components: {
+    'Video': Video
   },
   methods: {
       open() {
       this.$refs.snackbar.open();
     },
-    fetchItems() {
-      this.$http.get('https://cdn.contentful.com/spaces/' + spaces + '/entries?access_token=' + access_token + '')
+     
+   changeSearch(event) {
+     this.search = event.target.value;
+   },
+   active(filter) {
+     filter.active  = !filter.active;
+   },
 
+    fetchItems() {
+      
+      this.$http.get('https://cdn.contentful.com/spaces/' + spaces + '/entries?access_token=' + access_token + '')
+                // https://cdn.contentful.com/spaces/gux1c3twzpd4/entries?access_token=01a2c19d945b439da132249d1b2c265ea71e71a39be1ffa0cce5328a7d10d388
         .then(response => {
           this.result = JSON.parse(response.body).items.map(a => {
             var imageId = a.fields.images ? a.fields.images : [{ 'sys': { 'id': '' } }];
+            var sisaltoTyyppi = a.fields.sisaltoTyyppi;
+
             var dataObject = {
               'id': a.sys.id,
               'name': a.fields.name,
@@ -153,14 +202,15 @@ export default {
               'bodyText': a.fields.bodyText,
               'imageUrl': '',
               'createdAt': a.sys.createdAt,
-              'tyyppi': a.sys.id,
+              'imageId': imageId,
+              'type': sisaltoTyyppi || []
             };
             if (imageId[0].sys.id) {
               this.$http.get('https://cdn.contentful.com/spaces/' + spaces + '/assets/' + imageId[0].sys.id + '?access_token=' + access_token + '')
                 // https://cdn.contentful.com/spaces/gux1c3twzpd4/assets/4SDu2OUqvS4C2MseqqGyAs?access_token=01a2c19d945b439da132249d1b2c265ea71e71a39be1ffa0cce5328a7d10d388
                 .then(response => {
                   dataObject.imageUrl = JSON.parse(response.body).fields.file.url;
-                  console.log(dataObject);
+
 
                 })
             }
@@ -177,25 +227,94 @@ export default {
   created: function() {
     this.fetchItems();
   },
+  
 
   computed: {
-    filteredItems() {
-      if (this.search && this.search.length <= 0) {
-        return;
-      }
-      return this.result.filter(item => {
-        if (item && item.name && item && item.leadParagraph && item && item.bodyText) {
+    filteredSearch: function(){
+      return this.result.filter((item) => {
+      if (item && item.name && item && item.leadParagraph && item && item.bodyText && item.type) {
           return item.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1 ||
             item.leadParagraph.toLowerCase().indexOf(this.search.toLowerCase()) > -1 ||
-            item.bodyText.toLowerCase().indexOf(this.search.toLowerCase()) > -1
+            item.bodyText.toLowerCase().indexOf(this.search.toLowerCase()) > -1 ||
+            item.type.includes(this.search)
         }
-      })
-    }
+      });
+    },
   }
 }
 
 </script>
 <style scoped>
+
+
+.active {
+}
+
+.active:hover {
+  cursor: pointer;
+}
+.active:focus {
+  background-color: #051B4A; 
+  cursor: pointer;
+}
+.active:active {
+  background-color: #051B4A; 
+  cursor: pointer;
+}
+.button {
+  margin-right: 10px;
+  text-transform: uppercase;
+  font-weight: 700;
+  border: none;
+  padding: 5px 15px 5px 15px; 
+  min-height: 20px;
+  border-radius: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+.button:hover {
+  cursor: pointer;
+}
+.button:focus {
+  background-color: #051B4A; 
+  cursor: pointer;
+}
+.button:active {
+  background-color: #051B4A; 
+  cursor: pointer;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  min-height: 20px;
+  min-width: 20px;
+  margin-right: 20px; 
+}
+
+
+input[type=search], select {
+    width: 100%;
+    padding: 6px 10px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.search-input  {
+  width: 90%;
+  min-height: 3rem; 
+  font-size: 1.5rem; 
+  line-height: 3rem; 
+  margin-top: 10px;
+}
+
+.tooltip {
+  margin: 10px 
+}
 .container {
   z-index: 9;
   max-width: 60rem;
@@ -214,7 +333,7 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  min-height: 30vh;
+  height: 200px;
   animation: fadein 1s;
   -moz-animation: fadein 1s; /* Firefox */
   -webkit-animation: fadein 1s; /* Safari and Chrome */
@@ -234,7 +353,6 @@ export default {
 .filter-view {
   margin-top: 2%;
   margin-bottom: 2%;
-  text-align: ;
   padding: 20px;
 }
 
@@ -247,9 +365,7 @@ export default {
   margin-bottom: 20%;
 }
 
-.card {
-  margin: 10px 10px 10px 0px;
-}
+
 
 .md-card-media {
   margin-bottom: 0px;
@@ -329,6 +445,23 @@ h1 {
   box-sizing: border-box;
 }
 
+
+
+.md-chip {
+  height: 25px;
+  display: inline-block;
+  background: #051B4A;
+  padding: 5px 20px 5px 20px;
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 15px;
+  font-weight: 600;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  color: white;
+
+
+}
 
 
 /**
@@ -415,9 +548,19 @@ h3 {
  * Card Styles
  */
 
+
+.cards {
+  width: 100%;
+
+}
 .card {
   background-color: #fff;
   margin-bottom: 1.6rem;
+  margin: 10px 10px 10px 0px;
+  max-width: 32%;
+  display: block;
+  float: left;
+  height: 650px;
 }
 
 .card__padding {
@@ -432,6 +575,7 @@ h3 {
   height: 200px;
   z-index: 9;
   background-color: white;
+  border: none;
 }
 
 .card__image img {
@@ -439,16 +583,21 @@ h3 {
   height: auto;
   background-size: 100% auto !important;
   z-index: 9;
+    border: none;
+
   
 }
 .card__image img:hover {
   opacity: .5;
     -webkit-transition: .3s ease-in-out;
   transition: .1s ease-in-out;
+    border: none;
+
 }
 
 .card__content {
   position: relative;
+
 }
 
 
@@ -611,5 +760,11 @@ h3 {
     opacity: 1;
   }
 }
+
+
+
+
+
+
 
 </style>

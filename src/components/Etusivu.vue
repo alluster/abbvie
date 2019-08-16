@@ -1,12 +1,11 @@
 <template>
   <div class="etusivu">
     <div class="tausta">
-        <md-layout style="color: white"  >
-          <md-layout style="background-color:; box-shadow: none; border: none; position: relative; margin: auto;" md-tag="md-card" md-column md-flex="30" md-flex-medium="40" md-flex-small="60" md-flex-xsmall="90" >
-            <hgroup style="color: white">
-              <h2>Duodopa®</h2>       
-              <h1>Kirjaudu palveluun</h1>
-              <h2>Tai rekisteröidy käyttäjäksi</h2> 
+        <md-layout style="color: white; "  >
+          <md-layout style="background-color:; box-shadow: none; border: none; position: relative;" md-tag="md-card"  >
+            <hgroup style="color: white; margin-left: auto; margin-right: auto;" >
+              <h1>{{header}}</h1>
+              <h2>{{lead}}</h2>
                   <router-link to="/haku"><md-button style="background-color:  #051B4A; color: white;" class="md-raised md-primary">Kirjaudu&nbsp;&nbsp;<md-icon style="color: white">arrow_right</md-icon></md-button></router-link>
                   <router-link to="/asetukset"><md-button style="background-color:  white; color:  #051B4A;" class="md-raised md-primary">Rekisteröidy käyttäjäksi&nbsp;&nbsp;<md-icon style="color: #051B4A">lock_open</md-icon></md-button></router-link>        
 
@@ -32,6 +31,15 @@
           </md-layout>
         </md-layout>
     </div>
+  <div class="container">
+    <div class="container-content">
+       <h2 style="display: inline;"><md-icon>lock_open</md-icon>&nbsp;&nbsp;Tervetuloa Abbvien Duodopa® -palveluun (beta).</h2> <router-link to="/haku"><md-button style="display: inline; float: right; background-color:  #051B4A; color: white;" class="md-raised md-primary">Kirjaudu&nbsp;&nbsp;<md-icon style="color: white">arrow_right</md-icon></md-button></router-link>
+        <h4>Tämä sivusto on luotu esittelemään rakenteilla olevaa Duodopa® palvelua. Palveluun rekisteröityminen ei ole pakollista, vaan voit vapaasti siirtyä palveluun painamalla "Kirjaudu".  </h4>
+      </div>
+  
+
+
+  </div>
   </div>
 </template>
 <script>
@@ -40,8 +48,10 @@ export default {
   name: 'etusivu',
   data() {
     return {
-      header: 'Tervetuloa Abbvie Duodopa® palveluun',
-      lead: 'Ole hyvä ja kirjaudu jatkaaksesi palveluun. Mikäli sinulla ei vielä ole tunnuksia voit rekisteröityä. mikäli olet unohtanut salasanasi tai käyttäjätunnuksesi, paina tästä'
+      // header: 'Tervetuloa Abbvie Duodopa® palveluun',
+      // lead: 'Ole hyvä ja kirjaudu jatkaaksesi palveluun. Mikäli sinulla ei vielä ole tunnuksia voit rekisteröityä. mikäli olet unohtanut salasanasi tai käyttäjätunnuksesi, paina tästä',
+      header: 'Duodopa® Infuusiojärjestelmä ',
+      lead: 'Duodopa®-valmistetta käytetään Parkinsonin taudin hoitoon.',
     }
   },
   method: {
@@ -55,15 +65,28 @@ export default {
 </script>
 <style scoped>
 
+.container {
+  z-index: 9;
+  max-width: 60rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2%;
+  animation: fadein 1s;
+  -moz-animation: fadein 1s;
+  -webkit-animation: fadein 1s;
+  -o-animation: fadein 1s;
+
+}
+
+
 .tausta {
   background-image: url(../assets/abbvie.jpg);
-
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   margin: auto;
   min-width: 100%;
-  min-height: 100vh;
+  min-height: 70vh;
   animation: fadein 1s;
   -moz-animation: fadein 1s; /* Firefox */
   -webkit-animation: fadein 1s; /* Safari and Chrome */
@@ -79,7 +102,8 @@ export default {
 }
 hgroup {
   text-align: center;
-  margin-top: 4em;
+  overflow: hidden;
+  margin-top: 3rem; 
 }
 
 .mdl-layout {
@@ -89,7 +113,6 @@ hgroup {
 
 .mdl-layout__content {
   padding: 24px;
-  flex: none;
 }
 
 

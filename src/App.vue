@@ -1,59 +1,42 @@
 <template>
   <div id="app" >
-    <div v-cloak>
 <md-toolbar style="background-color: #051B4A; margin-bottom: 0; color: white; z-index: 101">
     <router-link to="/" style="margin-left: auto; margin-right: auto; width: 8em ">
-      <img style="display: block; margin-left: auto; margin-right: auto; padding: 2px; width: 10em;" src="./assets/logo-white.png">
+      <img style="display: block; margin-left: auto; margin-right: auto; padding: 2px; width: 10em; border: none" src="./assets/logo-white.png">
     </router-link>  
 
-  <h2 class="md-button" style="flex: 1; margin-left: 2em">Duodopa®</h2>
-  <h2 class="md-button" style="flex: 1; margin-left: 2em">Humira®</h2>
-  <h2 class="md-button" style="flex: 1; margin-left: 2em">Exviera®</h2>
-  <h2 class="md-button" style="flex: 1; margin-left: 2em">Chirocaine®</h2>
-  <h2 class="md-button" style="flex: 1; margin-left: 2em">Norvir®</h2>
+  <h2 class="md-button" style="flex: 1; margin-left: 2em">Parkinsonin tauti</h2>
+  <h2 class="md-button" style="flex: 1; margin-left: 2em">Autoimmuunisairaudet </h2>
+  <h2 class="md-button" style="flex: 1; margin-left: 2em">C-hepatiitti</h2>
+
+
   <router-link to="/asetukset" class="md-button" >Kalle Oksa&nbsp;&nbsp;&nbsp;&nbsp;<md-icon style="margin-left: 10px">lock</md-icon></router-link>
 </md-toolbar>
 
 
-<!-- <md-toolbar style="background-color: gray; color: white;">
-
-
-  <router-link to="/"><h2 style="flex: 1; margin-left: 2em" class="md-button md-raised">Etusivu</h2></router-link>
-  <router-link to="/asetukset"><h2 style="flex: 2; font-weight: 300; text-transform: none" class="md-button md-raised">Asetukset</h2></router-link>
-  <router-link to="/ohjeet"><h2  style="flex: 2; font-weight: 300; text-transform: none" class="md-button md-raised">Ohjeet</h2></router-link>
-  <router-link to="/haku"><h2  style="flex: 2; font-weight: 300; text-transform: none" class="md-button md-raised">Haku</h2></router-link>
-</md-toolbar>
- -->
-
 
   
-    <md-toolbar v-sticky :z-index="100"
-  :sticky-top="64" v-if="['Haku', 'Asetukset', 'Ohjeet', 'Julkaisu' ].indexOf($route.name) > -1" class="secondary-nav">
+    <div v-sticky :z-index="100" v-if="[ '#', 'Haku', 'Asetukset', 'Ohjeet', 'Julkaisu' ].indexOf($route.name) > -1" class="secondary-nav">
       <div class="links">
-
-        <router-link to="/" style="flex: 2; font-weight: 400; text-transform: none" class="md-button"><h5>Duodopa®</h5></router-link>
-        <router-link to="/" style="flex: 2; font-weight: 400; text-transform: none" class="md-button"><h5>Etusivu</h5></router-link>
-        <router-link to="/asetukset" style="flex: 2; font-weight: 300; text-transform: none" class="md-button"><h5>Asetukset</h5></router-link>
-        <router-link to="/haku" style="flex: 2; font-weight: 300; text-transform: none" class="md-button"><h5>Haku</h5></router-link>
-        <router-link to="/ohjeet" style="flex: 2; font-weight: 300; text-transform: none" class="md-button"><h5>Ohjeet</h5></router-link>
+        <router-link to="/" style=" font-weight: 400; text-transform: none" class="md-button"><h5>Duodopa®</h5></router-link>
+        <router-link to="/" style="font-weight: 400; text-transform: none" class="md-button"><h5>Etusivu</h5></router-link>
+        <router-link to="/asetukset" style="font-weight: 300; text-transform: none" class="md-button"><h5>Asetukset</h5></router-link>
+        <router-link to="/haku" style="font-weight: 300; text-transform: none" class="md-button"><h5>Haku</h5></router-link>
+        <router-link to="/ohjeet" style="font-weight: 300; text-transform: none" class="md-button"><h5>Ohjeet</h5></router-link>
       </div>    
-    </md-toolbar>
+    </div>
     <router-view></router-view>
-<md-bottom-bar style="background-color: #212121">
-  <md-bottom-bar-item ><router-link to="/" style="margin-left: auto; margin-right: auto; width: 8em ">
-      <img style="display: block; margin-left: auto; margin-right: auto; padding: 2px; width: 10em;" src="./assets/logo-white.png">
-    </router-link> </md-bottom-bar-item>
 
-</md-bottom-bar>
+
   </div>
-</div>
 </template>
 <script>
   import VueSticky from 'vue-sticky'
 
 
-const access_token = '36d87b4c5f2c055c76428045c3c755b8281c1da923ff9293f6cb387d5eb925a7'
-const spaces = 'crri95q24zbr'
+
+const access_token = process.env.API_KEY
+const spaces = process.env.API_SPACE
 
 import Etusivu from './components/Etusivu'
 import Asetukset from './components/Asetukset'
@@ -76,8 +59,7 @@ export default {
     'Julkaisu': Julkaisu,
     'Ohjeet': Ohjeet,
   },
-
-}
+ }
 
 </script>
 <style lang="css">
@@ -89,18 +71,18 @@ export default {
   margin: 0%
 }
 
-
+/* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
 
 
 /*Secondary nav*/
 .secondary-nav {
-  background: rgba(255,255,255,1);
-  box-shadow: 0 10px 20px rgba(80,80,80,.08);
-  position: fixed; 
-  min-width: 100%; 
+  background: white;
+  box-shadow: 0 2px 7px rgba(34,43,52,0.1), 0 1px 0 rgba(227,230,233,0.5);  position: fixed; 
+  width: 100%; 
   text-align: center; 
   z-index: 100;
-  top: 64px;
+  max-height: 60px;
+  min-height: 20px;
 }
 .links {
   max-width: 100rem;

@@ -99,7 +99,7 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  min-height: 30vh;
+  height: 200px;
   animation: fadein 1s;
   -moz-animation: fadein 1s; /* Firefox */
   -webkit-animation: fadein 1s; /* Safari and Chrome */
