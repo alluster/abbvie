@@ -44,7 +44,6 @@
     "http-proxy-middleware": "^0.17.3",
     "isotope-layout": "^3.0.4",
     "moment": "^2.19.1",
-    "node-sass": "^4.5.3",
     "opn": "^5.1.0",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "ora": "^1.2.0",
