@@ -5,6 +5,7 @@
   "author": "Aleksanteri <aleksanteri.heliovaara@siili.com>",
   "private": true,
   "scripts": {
+    "postinstall": "npm run build",
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
     "build": "node build/build.js"
